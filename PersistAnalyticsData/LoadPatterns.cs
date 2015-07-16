@@ -3,36 +3,33 @@ using Sitecore.Analytics;
 using Sitecore.Analytics.Data;
 using Sitecore.Analytics.Data.Items;
 using Sitecore.Analytics.Pipelines.CreateVisits;
+using Sitecore.Analytics.Tracking;
 using Sitecore.Data;
 using Sitecore.Web;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PersistAnalyticsData
 {
-    public class LoadPatterns : CreateVisitProcessor
+    public class LoadProfiles : CreateVisitProcessor
     {
         public override void Process(CreateVisitArgs args)
         {
-            var stProfilePatterns = WebUtil.GetCookieValue("SC.AnalyticsProfiles");
-            if (string.IsNullOrEmpty(stProfilePatterns)) return;
-            var profilePatterns = StringUtil.ParseNameValueCollection(stProfilePatterns,',','=');
-            foreach (var profileName in profilePatterns.AllKeys)
-            {
-                var profile = args.Visit.GetOrCreateProfile(profileName);
-                profile.BeginEdit();
-                profile.PatternId = Guid.Parse(profilePatterns[profileName]);
-                var patternCardItem = Tracker.DefinitionDatabase.GetItem(new ID(profile.PatternId));
-                if (patternCardItem != null)
-                {
-                    var ptci = new PatternCardItem(patternCardItem);
+            var storedProfiles = Tracker.Current.Contact.GetFacet<IProfilingStorage>(ProfilingStorage.FACETNAME);
+            
 
-                    profile.PatternLabel = ptci.NameField;
-                }
-                profile.EndEdit();
+            foreach (var storedProfileKey in storedProfiles.Profiles.Keys)
+            {
+                var storedProfile = storedProfiles.Profiles[storedProfileKey];
+                var profile = args.Interaction.Profiles[storedProfileKey];
+                
+                profile.Score(storedProfile.Values);
+                profile.UpdatePattern();
+               
             }
         }
     }

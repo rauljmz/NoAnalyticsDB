@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoAnalyticsDB", "NoAnalytic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistAnalyticsData", "PersistAnalyticsData\PersistAnalyticsData.csproj", "{B0A123AA-FFF0-4DD9-ABE7-F7C29BDABB90}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{4C23B3E1-67DB-4E08-A009-889DC2197365}"
+	ProjectSection(SolutionItems) = preProject
+		Sitecore.Settings.props = Sitecore.Settings.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

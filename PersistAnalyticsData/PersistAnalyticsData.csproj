@@ -57,7 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProfile.cs" />
+    <Compile Include="IProfileKey.cs" />
+    <Compile Include="IProfilingStorage.cs" />
     <Compile Include="LoadPatterns.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileKey.cs" />
+    <Compile Include="ProfilingStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorePatterns.cs" />
   </ItemGroup>
